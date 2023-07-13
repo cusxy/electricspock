@@ -13,11 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "make-groovy-great-again"
-includeBuild("plugin")
-includeBuild("sample")
-includeBuild("electricspock") {
-    dependencySubstitution {
-        substitute(module("ru.cusxy.mgga:electricspock")).using(project(":electricspock"))
-    }
-}
+rootProject.name = "electricspock"
+include("electricspock")
