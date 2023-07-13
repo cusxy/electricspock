@@ -14,4 +14,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "plugin"
-include("groovy-android-plugin")
+include("groovy-android-gradle-plugin")
