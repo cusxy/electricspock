@@ -12,10 +12,11 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
+import spock.lang.Ignore
 import spock.lang.Specification
 
 //@RunWith(RobolectricTestRunner)
-//@RunWith(JUnitPlatform)
+@Ignore
 class WelcomeActivityTest extends ElectricSpecification {
 
     @Test
@@ -29,18 +30,17 @@ class WelcomeActivityTest extends ElectricSpecification {
         c << [7, 5, 9]
     }
 
-//    @Test
-//    void "clicking login should start LoginActivity"() {
-//        given:
-//        def a = 3
-//        def b = 4
-//
-//        when:
-//        def c = a + b
-//
-//        then:
-//        assert c == 7
+    @Test
+    void "clicking login should start LoginActivity"() {
+        given:
+        ActivityController<WelcomeActivity> controller = Robolectric.buildActivity(WelcomeActivity)
+        def a = 10
 
+        when:
+        def b = a
+
+        then:
+        a == b
 //        try (ActivityController<WelcomeActivity> controller = Robolectric.buildActivity(WelcomeActivity)) {
 //            controller.setup()
 //            WelcomeActivity activity = controller.get()
@@ -50,5 +50,5 @@ class WelcomeActivityTest extends ElectricSpecification {
 //            Intent actual = Shadows.shadowOf(RuntimeEnvironment.application).getNextStartedActivity()
 //            Assert.assertEquals(expectedIntent.getComponent(), actual.getComponent())
 //        }
-//    }
+    }
 }

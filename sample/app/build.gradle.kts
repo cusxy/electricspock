@@ -25,18 +25,18 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
-//            all { test ->
-//                test.useJUnitPlatform()
-//            }
+            all { test ->
+                test.useJUnitPlatform()
+            }
         }
     }
 }
@@ -53,8 +53,8 @@ dependencies {
     testImplementation("org.codehaus.groovy:groovy:3.0.18")
     testImplementation("org.spockframework:spock-core:2.3-groovy-3.0")
     testImplementation("org.spockframework:spock-junit4:2.3-groovy-3.0")
-//    testImplementation("org.junit.vintage:junit-vintage-engine:5.9.3")
-    implementation("org.junit.platform:junit-platform-runner:1.9.3")
+    testImplementation("org.junit.platform:junit-platform-runner:1.9.3")
+    testImplementation("org.junit.vintage:junit-vintage-engine:5.9.3")
 
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

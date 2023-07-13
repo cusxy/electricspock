@@ -12,6 +12,7 @@ dependencies {
     implementation("org.spockframework:spock-core:2.3-groovy-3.0")
     implementation("org.spockframework:spock-junit4:2.3-groovy-3.0")
     implementation("org.junit.platform:junit-platform-runner:1.9.3")
+    implementation("org.junit.vintage:junit-vintage-engine:5.9.3")
 }
 
 afterEvaluate {
