@@ -35,7 +35,10 @@ android {
         unitTests {
             isIncludeAndroidResources = true
             all { test ->
-                test.useJUnitPlatform()
+                test.useJUnitPlatform {
+                    includeEngines("electric-spock")
+                    excludeEngines("spock")
+                }
             }
         }
     }
@@ -48,13 +51,17 @@ dependencies {
     implementation(libs.constraintlayout)
 
     testImplementation(libs.junit)
-    testImplementation("ru.cusxy.mgga:electricspock")
-    testImplementation("org.robolectric:robolectric:4.10.3")
+//    testImplementation("ru.cusxy.mgga:electricspock")
+    testImplementation("org.robolectric:robolectric:4.3.1")
     testImplementation("org.codehaus.groovy:groovy:3.0.18")
     testImplementation("org.spockframework:spock-core:2.3-groovy-3.0")
-    testImplementation("org.spockframework:spock-junit4:2.3-groovy-3.0")
+//    testImplementation("org.spockframework:spock-junit4:2.3-groovy-3.0")
     testImplementation("org.junit.platform:junit-platform-runner:1.9.3")
     testImplementation("org.junit.vintage:junit-vintage-engine:5.9.3")
+
+    testImplementation("org.hamcrest:hamcrest-core:2.2")
+    testRuntimeOnly("net.bytebuddy:byte-buddy:1.12.17")
+    testRuntimeOnly("org.objenesis:objenesis:3.3")
 
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

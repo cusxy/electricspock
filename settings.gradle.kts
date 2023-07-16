@@ -21,3 +21,8 @@ includeBuild("electricspock") {
         substitute(module("ru.cusxy.mgga:electricspock")).using(project(":electricspock"))
     }
 }
+includeBuild("test-engine") {
+    dependencySubstitution {
+        substitute(module("ru.cusxy.mgga:test-engine")).using(project(":test-engine"))
+    }
+}

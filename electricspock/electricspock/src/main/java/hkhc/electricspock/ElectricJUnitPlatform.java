@@ -126,25 +126,25 @@ public class ElectricJUnitPlatform extends Runner implements Filterable, Sortabl
      */
     private void registerSpec(Class<? extends Specification> specClass) {
 
-        TestRunnerStorage.INSTANCE.storage.put(specClass, containedRunner);
+//        TestRunnerStorage.INSTANCE.storage.put(specClass, containedRunner);
 
-//        Constructor interceptorConstructor = getInterceptorConstructor();
-//
-//        for (Method method : junitPlatform.getClass().getDeclaredMethods()) {
-//            Object specInfo = getSpec(method);
-//            if (specInfo != null) {
-//                try {
-//                    // ElectricSpockInterceptor register itself to SpecInfo on construction,
-//                    // no need to keep a ref here
-//                    interceptorConstructor.newInstance(specInfo, containedRunner);
-//                } catch (IllegalAccessException e) {
-//                    throw new RuntimeException(e);
-//                } catch (InvocationTargetException e) {
-//                    throw new RuntimeException(e);
-//                } catch (InstantiationException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
+        Constructor interceptorConstructor = getInterceptorConstructor();
+
+        for (Method method : junitPlatform.getClass().getDeclaredMethods()) {
+            Object specInfo = getSpec(method);
+            if (specInfo != null) {
+                try {
+                    // ElectricSpockInterceptor register itself to SpecInfo on construction,
+                    // no need to keep a ref here
+                    interceptorConstructor.newInstance(specInfo, containedRunner);
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                } catch (InvocationTargetException e) {
+                    throw new RuntimeException(e);
+                } catch (InstantiationException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 //        }
 
     }
