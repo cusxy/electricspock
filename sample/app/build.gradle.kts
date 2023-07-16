@@ -45,6 +45,8 @@ android {
 }
 
 dependencies {
+    implementation(kotlin("reflect"))
+
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
@@ -52,12 +54,18 @@ dependencies {
 
     testImplementation(libs.junit)
 //    testImplementation("ru.cusxy.mgga:electricspock")
-    testImplementation("org.robolectric:robolectric:4.3.1")
+    implementation("org.robolectric:robolectric:4.10.3")
     testImplementation("org.codehaus.groovy:groovy:3.0.18")
     testImplementation("org.spockframework:spock-core:2.3-groovy-3.0")
 //    testImplementation("org.spockframework:spock-junit4:2.3-groovy-3.0")
-    testImplementation("org.junit.platform:junit-platform-runner:1.9.3")
-    testImplementation("org.junit.vintage:junit-vintage-engine:5.9.3")
+//    testImplementation("org.junit.platform:junit-platform-runner:1.9.3")
+//    testImplementation("org.junit.vintage:junit-vintage-engine:5.9.3")
+
+//    testImplementation("org.robolectric:android-all:10-robolectric-5803371")
+//    testImplementation("org.robolectric:android-all-instrumented:10-robolectric-5803371-i1")
+
+//    testImplementation("io.kotest:kotest-framework-api:5.6.2")
+//    testImplementation("io.kotest:kotest-runner-junit5:5.6.2")
 
     testImplementation("org.hamcrest:hamcrest-core:2.2")
     testRuntimeOnly("net.bytebuddy:byte-buddy:1.12.17")
