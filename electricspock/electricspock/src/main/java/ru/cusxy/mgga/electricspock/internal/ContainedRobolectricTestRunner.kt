@@ -1,6 +1,5 @@
-package ru.cusxy.sample.app.extensions
+package ru.cusxy.mgga.electricspock.internal
 
-import org.junit.Test
 import org.junit.runners.model.FrameworkMethod
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.internal.AndroidSandbox
@@ -9,30 +8,28 @@ import java.lang.reflect.Method
 
 /**
  * Modified RobolectricTestRunner solely to be used by Spock interceptor.
- */
-
-/**
+ *
  * Pretend to be a test runner for the placeholder test class. We don't actually run tat test method.
  * Just use it to trigger all initialization of Robolectric infrastructure, and use it to run Spock specification.
  */
-class KotlinContainedRobolectricTestRunner : RobolectricTestRunner(PlaceholderTest::class.java) {
+internal class ContainedRobolectricTestRunner : RobolectricTestRunner(PlaceholderTest::class.java) {
 
-    val placeholderMethod: FrameworkMethod
-    val containedAndroidSandbox: AndroidSandbox
-    val bootstrappedMethod: Method
+    val sdkSandbox: AndroidSandbox
+
+    private val placeholderMethod: FrameworkMethod = children[0]
+    private val bootstrappedMethod: Method
 
     init {
-        placeholderMethod = children[0]
 
-        containedAndroidSandbox = getSandbox(placeholderMethod)
-        configureSandbox(containedAndroidSandbox, placeholderMethod)
+        sdkSandbox = getSandbox(placeholderMethod)
+        configureSandbox(sdkSandbox, placeholderMethod)
 
-        val bootstrappedTestClass = containedAndroidSandbox.bootstrappedClass<Any>(testClass.javaClass)
+        val bootstrappedTestClass = sdkSandbox.bootstrappedClass<Any>(testClass.javaClass)
         bootstrappedMethod = bootstrappedTestClass.getMethod(placeholderMethod.method.name)
     }
 
     fun containedBeforeTest() {
-        beforeTest(containedAndroidSandbox, placeholderMethod, bootstrappedMethod)
+        beforeTest(sdkSandbox, placeholderMethod, bootstrappedMethod)
     }
 
     fun containedAfterTest() {
@@ -44,16 +41,5 @@ class KotlinContainedRobolectricTestRunner : RobolectricTestRunner(PlaceholderTe
         return InstrumentationConfiguration.Builder(super.createClassLoaderConfig(method))
             .doNotAcquireClass(javaClass)
             .build()
-    }
-
-    /**
-     * A placeholder test class to obtain a proper FrameworkMethod (which is actually a
-     * RoboFrameworkTestMethod) by reusing existing code in RobolectricTestRunner
-     */
-    class PlaceholderTest {
-        /** Just a placeholder, the actual content of the test method is not important */
-        @Test
-        fun testPlaceholder() {
-        }
     }
 }
