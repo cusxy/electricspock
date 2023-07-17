@@ -39,6 +39,13 @@ android {
                     includeEngines("electric-spock")
                     excludeEngines("spock")
                 }
+                test.jvmArgs(
+//                    "--illegal-access=debug",
+//                    "--add-exports", "java.base/java.lang=ALL-UNNAMED",
+                    "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+//                    "--add-opens", "java.base/java.time=ALL-UNNAMED",
+//                    "--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED"
+                )
             }
         }
     }

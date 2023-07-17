@@ -11,6 +11,7 @@ import org.spockframework.runtime.ExtensionClassesLoader
 import org.spockframework.runtime.SpockEngine
 import ru.cusxy.sample.app.extensions.ContainedRobolectricTestRunner
 import java.io.InputStream
+import java.lang.reflect.Field
 import java.net.URL
 import java.util.Enumeration
 import java.util.logging.Logger
@@ -43,8 +44,18 @@ class ProxyTestEngine : TestEngine {
 //            proxyParentHandler
 //        )
 
-        ClassLoader::class.java
-            .getDeclaredField("parent")
+//        val lookup = MethodHandles.privateLookupIn(ClassLoader::class.java, MethodHandles.lookup())
+//        val parentField = lookup.findVarHandle(ClassLoader::class.java, "parent", ClassLoader::class.java)
+
+        val getDeclaredFields0 = Class::class.java.getDeclaredMethod("getDeclaredFields0", Boolean::class.java)
+        getDeclaredFields0.isAccessible = true
+
+        val fields = getDeclaredFields0.invoke(ClassLoader::class.java, false) as Array<Field>
+        val parentField = fields.find { field -> field.name == "parent" }
+
+//        ClassLoader::class.java
+//            .getDeclaredField("parent")
+        parentField!!
             .apply { isAccessible = true }
             .set(
                 containedTestRunner.containedAndroidSandbox.robolectricClassLoader,
@@ -122,6 +133,7 @@ class ProxyTestEngine : TestEngine {
             return when (name) {
                 ExtensionClassesLoader.EXTENSION_DESCRIPTOR_PATH,
                 ExtensionClassesLoader.CONFIG_DESCRIPTOR_PATH -> findResources(name)
+
                 else -> delegate.getResources(name)
             }
         }
