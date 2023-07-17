@@ -11,6 +11,11 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+    versionCatalogs {
+        create("sharedLibs") {
+            from("ru.cusxy.mgga.internal:libs-versions")
+        }
+    }
 }
 
 rootProject.name = "sample"

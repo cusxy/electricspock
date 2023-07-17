@@ -1,4 +1,4 @@
 plugins {
-    alias(libs.plugins.androidApplication) apply false
-    alias(libs.plugins.kotlinAndroid) apply false
+    alias(sharedLibs.plugins.androidApplication) apply false
+    alias(sharedLibs.plugins.kotlinAndroid) apply false
 }

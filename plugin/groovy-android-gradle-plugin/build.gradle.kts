@@ -1,16 +1,19 @@
 plugins {
     `java-gradle-plugin`
-    id("org.jetbrains.kotlin.jvm") version "1.8.22"
+    alias(sharedLibs.plugins.kotlinJvm)
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:7.4.2")
+    implementation(sharedLibs.androidBuildTools)
 }
+
+group = "ru.cusxy.mgga"
+version = "1.0.0"
 
 gradlePlugin {
     plugins {
         create("agp") {
-            id = "ru.cusxy.groovy-android"
+            id = "ru.cusxy.mgga.groovy-android"
             implementationClass = "plugin.GroovyAndroidPlugin"
         }
     }

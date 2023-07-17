@@ -13,5 +13,4 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "test-engine"
-include("test-engine")
+rootProject.name = "libs-versions"

@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotlinAndroid)
-    id("ru.cusxy.groovy-android")
+    alias(sharedLibs.plugins.androidApplication)
+    alias(sharedLibs.plugins.kotlinAndroid)
+    id("ru.cusxy.mgga.groovy-android")
 }
 
 android {
@@ -37,14 +37,9 @@ android {
             all { test ->
                 test.useJUnitPlatform {
                     includeEngines("electric-spock")
-                    excludeEngines("spock")
                 }
                 test.jvmArgs(
-//                    "--illegal-access=debug",
-//                    "--add-exports", "java.base/java.lang=ALL-UNNAMED",
                     "--add-opens", "java.base/java.lang=ALL-UNNAMED",
-//                    "--add-opens", "java.base/java.time=ALL-UNNAMED",
-//                    "--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED"
                 )
             }
         }
@@ -54,30 +49,21 @@ android {
 dependencies {
     implementation(kotlin("reflect"))
 
-    implementation(libs.core.ktx)
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.constraintlayout)
+    implementation(sharedLibs.core.ktx)
+    implementation(sharedLibs.appcompat)
+    implementation(sharedLibs.material)
+    implementation(sharedLibs.constraintlayout)
 
-    testImplementation(libs.junit)
-//    testImplementation("ru.cusxy.mgga:electricspock")
-    implementation("org.robolectric:robolectric:4.10.3")
-    testImplementation("org.codehaus.groovy:groovy:3.0.18")
-    testImplementation("org.spockframework:spock-core:2.3-groovy-3.0")
-//    testImplementation("org.spockframework:spock-junit4:2.3-groovy-3.0")
-//    testImplementation("org.junit.platform:junit-platform-runner:1.9.3")
-//    testImplementation("org.junit.vintage:junit-vintage-engine:5.9.3")
+    testImplementation("ru.cusxy.mgga:electricspock")
+    testImplementation(sharedLibs.groovy)
+    testImplementation(sharedLibs.junit)
+    testImplementation(sharedLibs.robolectric)
+    testImplementation(sharedLibs.spockframework.spockCore)
 
-//    testImplementation("org.robolectric:android-all:10-robolectric-5803371")
-//    testImplementation("org.robolectric:android-all-instrumented:10-robolectric-5803371-i1")
+    testImplementation(sharedLibs.hamcrest)
+    testRuntimeOnly(sharedLibs.bytebuddy)
+    testRuntimeOnly(sharedLibs.objenesis)
 
-//    testImplementation("io.kotest:kotest-framework-api:5.6.2")
-//    testImplementation("io.kotest:kotest-runner-junit5:5.6.2")
-
-    testImplementation("org.hamcrest:hamcrest-core:2.2")
-    testRuntimeOnly("net.bytebuddy:byte-buddy:1.12.17")
-    testRuntimeOnly("org.objenesis:objenesis:3.3")
-
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(sharedLibs.androidx.test.ext.junit)
+    androidTestImplementation(sharedLibs.espresso.core)
 }

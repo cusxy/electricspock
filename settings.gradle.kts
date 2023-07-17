@@ -14,15 +14,15 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "make-groovy-great-again"
+includeBuild("libs-versions") {
+    dependencySubstitution {
+        substitute(module("ru.cusxy.mgga.internal:libs-versions")).using(project(":"))
+    }
+}
 includeBuild("plugin")
 includeBuild("sample")
 includeBuild("electricspock") {
     dependencySubstitution {
         substitute(module("ru.cusxy.mgga:electricspock")).using(project(":electricspock"))
-    }
-}
-includeBuild("test-engine") {
-    dependencySubstitution {
-        substitute(module("ru.cusxy.mgga:test-engine")).using(project(":test-engine"))
     }
 }

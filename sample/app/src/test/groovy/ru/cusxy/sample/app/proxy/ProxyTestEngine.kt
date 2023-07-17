@@ -18,8 +18,6 @@ import java.util.logging.Logger
 
 class ProxyTestEngine : TestEngine {
 
-    private val logger = Logger.getLogger(ProxyTestEngine::class.java.name)
-
     private lateinit var containedTestRunner: ContainedRobolectricTestRunner
     private lateinit var delegateClass: Class<*>
     private lateinit var delegate: Any // SpockEngine (in other class loader)
@@ -29,32 +27,12 @@ class ProxyTestEngine : TestEngine {
     override fun discover(discoveryRequest: EngineDiscoveryRequest, uniqueId: UniqueId): TestDescriptor {
         containedTestRunner = ContainedRobolectricTestRunner()
 
-//        val proxyParentHandler = object : InvocationHandler {
-//
-//            private val target: Any = containedTestRunner.containedAndroidSandbox.robolectricClassLoader
-//
-//            override fun invoke(proxy: Any, method: Method, args: Array<out Any>): Any? {
-//                logger.info("Invoke\n\t$proxy,\n\tmethod $method,\n\targs: $args")
-//                return method.invoke(target, args)
-//            }
-//        }
-//        val proxyParent = Proxy.newProxyInstance(
-//            Thread.currentThread().contextClassLoader,
-//            ClassLoader::class.java.interfaces,
-//            proxyParentHandler
-//        )
-
-//        val lookup = MethodHandles.privateLookupIn(ClassLoader::class.java, MethodHandles.lookup())
-//        val parentField = lookup.findVarHandle(ClassLoader::class.java, "parent", ClassLoader::class.java)
-
         val getDeclaredFields0 = Class::class.java.getDeclaredMethod("getDeclaredFields0", Boolean::class.java)
         getDeclaredFields0.isAccessible = true
 
         val fields = getDeclaredFields0.invoke(ClassLoader::class.java, false) as Array<Field>
         val parentField = fields.find { field -> field.name == "parent" }
 
-//        ClassLoader::class.java
-//            .getDeclaredField("parent")
         parentField!!
             .apply { isAccessible = true }
             .set(
@@ -80,11 +58,8 @@ class ProxyTestEngine : TestEngine {
             }
         }
 
-//        Thread.currentThread().contextClassLoader = ProxyTestEngine::class.java.classLoader.parent
         delegateClass = containedTestRunner.containedAndroidSandbox
             .bootstrappedClass<Any>(SpockEngine::class.java)
-//        Thread.currentThread().contextClassLoader = ProxyTestEngine::class.java.classLoader
-//        delegateClass = SpockEngine::class.java
         delegate = delegateClass
             .getConstructor()
             .newInstance()
