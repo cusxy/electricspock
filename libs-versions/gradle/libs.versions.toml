@@ -16,6 +16,8 @@ hamcrest = "2.2"
 bytebuddy = "1.12.17"
 objenesis = "3.3"
 
+gradlePublish = "1.2.0"
+
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -38,3 +40,4 @@ androidBuildTools = { module = "com.android.tools.build:gradle", version.ref = "
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+gradlePublish = { id = "com.gradle.plugin-publish", version.ref = "gradlePublish" }

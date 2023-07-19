@@ -1,7 +1,7 @@
 plugins {
     alias(sharedLibs.plugins.androidApplication)
     alias(sharedLibs.plugins.kotlinAndroid)
-    id("ru.cusxy.mgga.groovy-android")
+    id("ru.cusxy.mgga.groovy-android-gradle-plugin")
 }
 
 android {

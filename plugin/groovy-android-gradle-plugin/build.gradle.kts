@@ -1,5 +1,7 @@
 plugins {
     `java-gradle-plugin`
+    `maven-publish`
+    alias(sharedLibs.plugins.gradlePublish)
     alias(sharedLibs.plugins.kotlinJvm)
 }
 
@@ -12,8 +14,9 @@ version = "1.0.0"
 
 gradlePlugin {
     plugins {
-        create("agp") {
-            id = "ru.cusxy.mgga.groovy-android"
+        create("groovyAndroid") {
+            id = "ru.cusxy.mgga.groovy-android-gradle-plugin"
+            displayName = "groovy-android-gradle-plugin"
             implementationClass = "plugin.GroovyAndroidPlugin"
         }
     }
