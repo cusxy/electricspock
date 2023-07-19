@@ -121,10 +121,6 @@ class GroovyAndroidPlugin
         }
         logger.debug("Groovy sources for {}: {}", variantName, groovyTask.source.files)
 
-        val additionalSourceFiles = getGeneratedSourceDirs(androidVariant)
-        logger.debug("Additional source files found at {}", additionalSourceFiles)
-        groovyTask.source(additionalSourceFiles)
-
         groovyTask.doFirst { task ->
             task as GroovyCompile
 

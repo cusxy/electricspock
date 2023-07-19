@@ -20,3 +20,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "sample"
 include(":app")
+include(":lib")

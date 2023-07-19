@@ -1,7 +1,7 @@
 [versions]
 agp = "7.4.2"
 kotlin = "1.8.22"
-core-ktx = "1.9.0"
+core-ktx = "1.10.1"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
@@ -13,7 +13,7 @@ robolectric = "4.10.3"
 groovy = "3.0.18"
 spockframework = "2.3-groovy-3.0"
 hamcrest = "2.2"
-bytebuddy = "1.12.17"
+bytebuddy = "1.12.23"
 objenesis = "3.3"
 
 gradlePublish = "1.2.0"
@@ -38,6 +38,7 @@ androidBuildTools = { module = "com.android.tools.build:gradle", version.ref = "
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 gradlePublish = { id = "com.gradle.plugin-publish", version.ref = "gradlePublish" }
