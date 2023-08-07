@@ -5,6 +5,12 @@ plugins {
     alias(sharedLibs.plugins.kotlinJvm)
 }
 
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of("11"))
+    }
+}
+
 dependencies {
     implementation(sharedLibs.groovy)
     implementation(sharedLibs.junit)

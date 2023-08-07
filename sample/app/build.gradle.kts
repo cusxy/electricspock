@@ -4,6 +4,12 @@ plugins {
     id("ru.cusxy.mgga.groovy-android-gradle-plugin")
 }
 
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of("11"))
+    }
+}
+
 android {
     namespace = "ru.cusxy.sample.app"
     compileSdk = 33

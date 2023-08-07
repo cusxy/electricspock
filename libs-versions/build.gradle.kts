@@ -3,6 +3,11 @@ plugins {
     `maven-publish`
 }
 
+copy {
+    from("gradle/libs.versions.toml")
+    into(layout.buildDirectory.file("version-catalog"))
+}
+
 catalog {
     versionCatalog {
         from(files("gradle/libs.versions.toml"))
