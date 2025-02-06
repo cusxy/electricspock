@@ -1,4 +1,4 @@
-rootProject.name = "make-groovy-great-again"
+rootProject.name = "groovy-android-gradle-plugin"
 
 pluginManagement {
     repositories {
@@ -20,9 +20,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+    versionCatalogs {
+        create("libs") { from(files("../gradle/libs.versions.toml")) }
+    }
 }
-
-includeBuild("groovy-android-gradle-plugin")
-
-include(":electricspock")
-include(":sample")

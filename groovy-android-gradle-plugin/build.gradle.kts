@@ -1,18 +1,23 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     `java-gradle-plugin`
-    `maven-publish`
-    alias(sharedLibs.plugins.gradlePublish)
-    alias(sharedLibs.plugins.kotlinJvm)
+    `kotlin-dsl`
+}
+
+java {
+    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_11
 }
 
 kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of("11"))
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_11
     }
 }
 
 dependencies {
-    implementation(sharedLibs.androidBuildTools)
+    implementation(libs.androidBuildTools)
 }
 
 group = "ru.cusxy.mgga"

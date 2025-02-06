@@ -2,9 +2,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     `java-library`
-    alias(libs.plugins.kotlinJvm)
     groovy
-    `maven-publish`
+    alias(libs.plugins.kotlinJvm)
 }
 
 group = "ru.cusxy.mgga"
@@ -26,14 +25,4 @@ dependencies {
     implementation(libs.junit)
     implementation(libs.robolectric)
     implementation(libs.spockframework.spockCore)
-}
-
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("default") {
-                from(components["java"])
-            }
-        }
-    }
 }

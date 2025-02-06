@@ -129,17 +129,17 @@ class GroovyAndroidPlugin
         val groovyCompilerArgs = providerFactory.provider { javaTask.options.compilerArgs }
         val groovyAnnotationProcessorPath = providerFactory.provider { javaTask.options.annotationProcessorPath }
 
-        groovyTask.doFirst { task ->
-            task as GroovyCompile
+        groovyTask.doFirst {
+            this as GroovyCompile
 
-            task.classpath = groovyClasspath.get()
-            task.groovyClasspath = task.classpath
-            task.options.compilerArgs.addAll(groovyCompilerArgs.get())
-            task.groovyOptions.isJavaAnnotationProcessing = true
-            task.options.annotationProcessorPath = groovyAnnotationProcessorPath.get()
+            this.classpath = groovyClasspath.get()
+            this.groovyClasspath = this.classpath
+            this.options.compilerArgs.addAll(groovyCompilerArgs.get())
+            this.groovyOptions.isJavaAnnotationProcessing = true
+            this.options.annotationProcessorPath = groovyAnnotationProcessorPath.get()
 
             logger.debug("Java annotationProcessorPath {}", groovyAnnotationProcessorPath.get())
-            logger.debug("Groovy compiler args {}", task.options.compilerArgs)
+            logger.debug("Groovy compiler args {}", this.options.compilerArgs)
         }
 
         androidVariant.registerPostJavacGeneratedBytecode(groovyTask.outputs.files)
