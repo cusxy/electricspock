@@ -1,3 +1,5 @@
+rootProject.name = "plugin"
+
 pluginManagement {
     repositories {
         google()
@@ -5,6 +7,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -12,11 +15,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
     versionCatalogs {
-        create("sharedLibs") {
-            from("ru.cusxy.mgga.internal:libs-versions")
-        }
+        create("sharedLibs") { from(files("../gradle/libs.versions.toml")) }
     }
 }
 
-rootProject.name = "plugin"
 include("groovy-android-gradle-plugin")

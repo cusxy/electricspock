@@ -13,6 +13,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -21,15 +22,11 @@ dependencyResolutionManagement {
     }
 }
 
-includeBuild("libs-versions") {
-    dependencySubstitution {
-        substitute(module("ru.cusxy.mgga.internal:libs-versions")).using(project(":"))
-    }
-}
 includeBuild("plugin")
-includeBuild("sample")
 includeBuild("electricspock") {
     dependencySubstitution {
         substitute(module("ru.cusxy.mgga:electricspock")).using(project(":electricspock"))
     }
 }
+
+includeBuild("sample")

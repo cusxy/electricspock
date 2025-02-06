@@ -12,9 +12,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
     versionCatalogs {
-        create("sharedLibs") {
-            from("ru.cusxy.mgga.internal:libs-versions")
-        }
+        create("sharedLibs") { from(files("../gradle/libs.versions.toml")) }
     }
 }
 
