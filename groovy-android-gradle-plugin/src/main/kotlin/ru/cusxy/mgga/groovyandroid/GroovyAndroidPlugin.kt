@@ -1,4 +1,4 @@
-package plugin
+package ru.cusxy.mgga.groovyandroid
 
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.api.AndroidSourceSet
@@ -12,7 +12,7 @@ import org.gradle.api.model.ObjectFactory
 import org.gradle.api.plugins.ExtensionAware
 import org.gradle.api.provider.ProviderFactory
 import org.gradle.api.tasks.compile.GroovyCompile
-import plugin.utils.forAllAndroidVariants
+import ru.cusxy.mgga.groovyandroid.utils.forAllAndroidVariants
 import javax.inject.Inject
 
 class GroovyAndroidPlugin

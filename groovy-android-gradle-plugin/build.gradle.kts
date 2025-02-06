@@ -26,9 +26,9 @@ version = "1.0.0"
 gradlePlugin {
     plugins {
         create("groovyAndroid") {
-            id = "ru.cusxy.mgga.groovy-android-gradle-plugin"
-            displayName = "groovy-android-gradle-plugin"
-            implementationClass = "plugin.GroovyAndroidPlugin"
+            id = "ru.cusxy.mgga.groovy-android"
+            displayName = "groovy-android"
+            implementationClass = "ru.cusxy.mgga.groovyandroid.GroovyAndroidPlugin"
         }
     }
 }

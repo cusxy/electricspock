@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
-    id("ru.cusxy.mgga.groovy-android-gradle-plugin")
+    id("ru.cusxy.mgga.groovy-android")
 }
 
 kotlin {

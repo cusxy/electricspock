@@ -1,4 +1,4 @@
-package plugin.utils
+package ru.cusxy.mgga.groovyandroid.utils
 
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.LibraryExtension
