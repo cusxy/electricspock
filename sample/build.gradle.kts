@@ -67,7 +67,4 @@ dependencies {
     testImplementation(libs.hamcrest)
     testRuntimeOnly(libs.bytebuddy)
     testRuntimeOnly(libs.objenesis)
-
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
 }
