@@ -23,10 +23,6 @@ dependencyResolutionManagement {
 }
 
 includeBuild("plugin")
-includeBuild("electricspock") {
-    dependencySubstitution {
-        substitute(module("ru.cusxy.mgga:electricspock")).using(project(":electricspock"))
-    }
-}
+include("electricspock")
 
 include(":sample")

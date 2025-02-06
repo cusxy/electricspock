@@ -58,7 +58,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.constraintlayout)
 
-    testImplementation("ru.cusxy.mgga:electricspock")
+    testImplementation(project(":electricspock"))
     testImplementation(libs.groovy)
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)
