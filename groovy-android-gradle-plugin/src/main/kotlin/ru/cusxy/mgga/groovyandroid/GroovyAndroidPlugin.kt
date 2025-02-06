@@ -15,6 +15,22 @@ import org.gradle.api.tasks.compile.GroovyCompile
 import ru.cusxy.mgga.groovyandroid.utils.forAllAndroidVariants
 import javax.inject.Inject
 
+/**
+ * `GroovyAndroidPlugin` is a custom Gradle plugin that enables the use of Groovy in Android
+ * projects. It provides a way to compile Groovy code and integrate it into the Android build
+ * process, even though official Groovy support has been deprecated by Apache.
+ *
+ * **Purpose:**
+ *
+ * The primary goal of this plugin is to allow developers to continue using Groovy in their
+ * Android projects, particularly for writing tests with frameworks like Spock.
+ *
+ * **Warning:**
+ *
+ * **Android Build Integration is not supported.** It doesn't integrate the compiled Groovy code
+ * into the Android build process, making it part of the final APK or AAB. The required version
+ * of _grooid_ is no longer supported.
+ */
 class GroovyAndroidPlugin
 @Inject constructor(
     private val objects: ObjectFactory,

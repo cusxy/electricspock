@@ -13,17 +13,73 @@ import ru.cusxy.mgga.electricspock.internal.ProxyParentClassLoader
 import ru.cusxy.mgga.electricspock.internal.utils.findSecurityProtectedField
 
 /**
- * Прокси для SpockEngine подменяет загрузчик классов тестового класса для возможности загрузки классов Robolectric.
+ * `ProxyTestEngine` is a custom JUnit Platform `TestEngine` that enables the use of the Spock testing
+ * framework in conjunction with Robolectric for Android testing. It acts as a bridge between the
+ * JUnit Platform, Spock, and Robolectric, overcoming their inherent incompatibilities.
  *
- * Для корректной работы движка требуется исключить spock engine из загрузчика JUnitPlatform:
+ * **Purpose:**
  *
- * ```groovy
- *   tasks.test {
- *     useJUnitPlatform {
- *       excludeEngines 'spock'
+ * The primary goal of `ProxyTestEngine` is to allow developers to write Android tests using Spock's
+ * expressive syntax and Robolectric's simulated Android environment. This combination is not
+ * natively supported because Spock and Robolectric use different test runners and class loading
+ * mechanisms.
+ *
+ * **Functionality:**
+ *
+ * 1.  **Delegation to Spock:** `ProxyTestEngine` delegates the core test discovery and execution
+ *     logic to the standard `SpockEngine`.
+ * 2.  **Robolectric ClassLoader Integration:** It uses Robolectric's class loader to load test
+ *     classes and their dependencies. This is crucial for Robolectric's shadow objects to function
+ *     correctly.
+ * 3.  **ClassLoader Manipulation:**
+ *     *   It replaces the parent class loader of Robolectric's class loader with a custom
+ *         `ProxyParentClassLoader`.
+ *     *   It replaces the class loader of the test class with Robolectric's class loader.
+ * 4. **Security Protected Field:**
+ *     * It uses reflection to access a security-protected field.
+ * 5. **Context ClassLoader:**
+ *     * It changes the context class loader of the current thread.
+ * 6. **Excluding Spock Engine:**
+ *     * The user must exclude spock engine from JUnitPlatform.
+ *
+ * **How It Works:**
+ *
+ * *   **Test Discovery:** When the JUnit Platform starts test discovery, `ProxyTestEngine` intercepts
+ *     the request. It then uses class loader manipulation to ensure that test classes are loaded
+ *     by Robolectric's class loader. Finally, it delegates the discovery to the `SpockEngine`.
+ * *   **Test Execution:** During test execution, `ProxyTestEngine` sets the current thread's context
+ *     class loader to Robolectric's class loader. It then delegates the execution to the
+ *     `SpockEngine`. After the execution, it restores the original context class loader.
+ *
+ * **Usage:**
+ *
+ * To use `ProxyTestEngine`, you need to:
+ *
+ * 1.  Include the `electricspock` library as a test dependency in your project.
+ * 2.  Exclude the default `spock` engine from JUnit Platform in your `build.gradle.kts` file:
+ *
+ * ```kotlin
+ * android {
+ *     testOptions {
+ *         unitTests {
+ *             all { test ->
+ *                 test.useJUnitPlatform {
+ *                     excludeEngines("spock") // Exclude the default Spock engine
+ *                 }
+ *                 test.jvmArgs( // Required for advanced reflection
+ *                     "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+ *                 )
+ *             }
+ *         }
  *     }
- *   }
+ * }
  * ```
+ *
+ * 3. Apply the `ru.cusxy.mgga.groovy-android` plugin to your module's `build.gradle.kts` file.
+ *
+ * @see SpockEngine
+ * @see ContainedRobolectricTestRunner
+ * @see ProxyParentClassLoader
  */
 class ProxyTestEngine : TestEngine {
 
