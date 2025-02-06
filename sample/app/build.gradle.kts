@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(sharedLibs.plugins.androidApplication)
     alias(sharedLibs.plugins.kotlinAndroid)
@@ -5,25 +7,24 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of("11"))
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_1_8
     }
 }
 
 android {
-    namespace = "ru.cusxy.sample.app"
-    compileSdk = 33
+    namespace = "ru.cusxy.mgga.app"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "ru.cusxy.sample.app"
+        applicationId = "ru.cusxy.mgga.app"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -31,11 +32,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     testOptions {
         unitTests {

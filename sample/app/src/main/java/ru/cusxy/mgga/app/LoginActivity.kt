@@ -1,4 +1,4 @@
-package ru.cusxy.sample.app
+package ru.cusxy.mgga.app
 
 import android.app.Activity
 

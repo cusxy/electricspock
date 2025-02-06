@@ -1,6 +1,14 @@
+rootProject.name = "make-groovy-great-again"
+
 pluginManagement {
     repositories {
-        google()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
         mavenCentral()
         gradlePluginPortal()
     }
@@ -13,7 +21,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "make-groovy-great-again"
 includeBuild("libs-versions") {
     dependencySubstitution {
         substitute(module("ru.cusxy.mgga.internal:libs-versions")).using(project(":"))

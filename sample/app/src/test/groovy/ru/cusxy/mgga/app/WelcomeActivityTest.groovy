@@ -1,10 +1,7 @@
-package ru.cusxy.sample.app
+package ru.cusxy.mgga.app
 
 import android.content.Intent
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
-import org.robolectric.android.controller.ActivityController
 import spock.lang.Specification
 import org.robolectric.Robolectric
 import org.robolectric.Shadows

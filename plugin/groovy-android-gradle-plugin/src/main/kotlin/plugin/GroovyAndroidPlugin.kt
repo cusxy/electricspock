@@ -3,7 +3,6 @@ package plugin
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.api.AndroidSourceSet
 import com.android.build.gradle.api.BaseVariant
-import com.android.build.gradle.api.SourceKind
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -11,14 +10,15 @@ import org.gradle.api.file.SourceDirectorySet
 import org.gradle.api.logging.Logging
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.plugins.ExtensionAware
+import org.gradle.api.provider.ProviderFactory
 import org.gradle.api.tasks.compile.GroovyCompile
 import plugin.utils.forAllAndroidVariants
-import java.io.File
 import javax.inject.Inject
 
 class GroovyAndroidPlugin
 @Inject constructor(
     private val objects: ObjectFactory,
+    private val providerFactory: ProviderFactory,
 ) : Plugin<Project> {
 
     private val logger = Logging.getLogger(this::class.java)
@@ -102,14 +102,15 @@ class GroovyAndroidPlugin
         androidVariant.sourceSets.forEach { provider ->
             if (provider !is ExtensionAware) return@forEach
 
-            val groovySourceDirectorySet = provider.extensions.findByName("groovy") as? SourceDirectorySet
-            if (groovySourceDirectorySet == null) return@forEach
+            val groovySourceDirectorySet =
+                provider.extensions.findByName("groovy") as? SourceDirectorySet ?: return@forEach
 
             groovyTask.source(groovySourceDirectorySet)
 
             // exclude any java files that may be included in both java and groovy source sets
+            val sourceSetFiles = providerFactory.provider { groovySourceDirectorySet.files }
             javaTask.exclude { file ->
-                file.file in groovySourceDirectorySet.files
+                file.file in sourceSetFiles.get()
             }
         }
 
@@ -121,24 +122,26 @@ class GroovyAndroidPlugin
         }
         logger.debug("Groovy sources for {}: {}", variantName, groovyTask.source.files)
 
+        val androidRuntime = providerFactory.provider { androidExtension.bootClasspath }
+        val groovyClasspath = providerFactory.provider {
+            objects.fileCollection().from(androidRuntime.get(), javaTask.classpath)
+        }
+        val groovyCompilerArgs = providerFactory.provider { javaTask.options.compilerArgs }
+        val groovyAnnotationProcessorPath = providerFactory.provider { javaTask.options.annotationProcessorPath }
+
         groovyTask.doFirst { task ->
             task as GroovyCompile
 
-            val androidRuntime = androidExtension.bootClasspath
-            task.classpath = objects.fileCollection().from(androidRuntime, javaTask.classpath)
+            task.classpath = groovyClasspath.get()
             task.groovyClasspath = task.classpath
-            task.options.compilerArgs.addAll(javaTask.options.compilerArgs)
+            task.options.compilerArgs.addAll(groovyCompilerArgs.get())
             task.groovyOptions.isJavaAnnotationProcessing = true
-            task.options.annotationProcessorPath = javaTask.options.annotationProcessorPath
+            task.options.annotationProcessorPath = groovyAnnotationProcessorPath.get()
 
-            logger.debug("Java annotationProcessorPath {}", javaTask.options.annotationProcessorPath)
+            logger.debug("Java annotationProcessorPath {}", groovyAnnotationProcessorPath.get())
             logger.debug("Groovy compiler args {}", task.options.compilerArgs)
         }
 
         androidVariant.registerPostJavacGeneratedBytecode(groovyTask.outputs.files)
-    }
-
-    private fun getGeneratedSourceDirs(variant: BaseVariant): List<File> {
-        return variant.getSourceFolders(SourceKind.JAVA).map { it.dir }
     }
 }
